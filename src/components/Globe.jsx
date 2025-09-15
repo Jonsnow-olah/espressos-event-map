@@ -98,7 +98,7 @@ useEffect(() => {
   controls.autoRotate = true;
   controls.autoRotateSpeed = 0.25;
 
-  // Scene background – stary blue
+
   scene.background = new THREE.Color(0x0d1b3c); // deep stary blue
 
   // Lighting
@@ -223,12 +223,12 @@ useEffect(() => {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.25;
 
-    // Remove old stars if any
+    
     if (globe.scene().getObjectByName("stars")) {
       globe.scene().remove(globe.scene().getObjectByName("stars"));
     }
 
-    // Add distant twinkling stars
+    // twinkling stars
     const starGeometry = new THREE.BufferGeometry();
     const starCount = 5000;
     const starVertices = [];
