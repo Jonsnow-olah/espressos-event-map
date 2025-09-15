@@ -35,55 +35,72 @@ export default function EspressoWorldMap() {
   });
 
   useEffect(() => {
-    if (document.getElementById("espresso-map-styles")) return;
-    const style = document.createElement("style");
-    style.id = "espresso-map-styles";
-    style.innerHTML = `
-      @font-face { font-family: 'IBMPlexMono'; src: url(${IBMPlexMonoRegular}) format('truetype'); font-weight: 400; font-style: normal; }
-      @font-face { font-family: 'IBMPlexMono'; src: url(${IBMPlexMonoBold}) format('truetype'); font-weight: 700; font-style: normal; }
+  if (document.getElementById("espresso-map-styles")) return;
+  const style = document.createElement("style");
+  style.id = "espresso-map-styles";
+  style.innerHTML = `
+    @font-face { font-family: 'IBMPlexMono'; src: url(${IBMPlexMonoRegular}) format('truetype'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'IBMPlexMono'; src: url(${IBMPlexMonoBold}) format('truetype'); font-weight: 700; font-style: normal; }
 
-      .globe-container { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(#000 0%, #050505 100%); overflow: hidden; }
-      canvas { width: 100% !important; height: 100% !important; display: block; }
+    .globe-container { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(#000 0%, #050505 100%); overflow: hidden; }
+    canvas { width: 100% !important; height: 100% !important; display: block; }
 
-      .espresso-marker { position: relative; width: 28px; height: 28px; transform: translate(-50%, -50%); cursor: pointer; }
-      .pulse { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 20px; height: 20px; border-radius: 999px; animation: pulseEffect 2.5s infinite; }
-      .core { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 10px; height: 10px; border-radius: 50%; border: 2px solid #fff; z-index: 2; }
+    .espresso-marker { position: relative; width: 28px; height: 28px; transform: translate(-50%, -50%); cursor: pointer; }
+    .pulse { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 20px; height: 20px; border-radius: 999px; animation: pulseEffect 2.5s infinite; }
+    .core { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 10px; height: 10px; border-radius: 50%; border: 2px solid #fff; z-index: 2; }
 
-      .past .pulse { background: rgba(69,31,23,0.25); box-shadow: 0 0 25px rgba(69,31,23,0.8); }
-      .past .core { background: #451F17; }
-      .upcoming .pulse { background: rgba(222,158,103,0.25); box-shadow: 0 0 25px rgba(222,158,103,0.8); }
-      .upcoming .core { background: #DE9E67; }
+    .past .pulse { background: rgba(69,31,23,0.25); box-shadow: 0 0 25px rgba(69,31,23,0.8); }
+    .past .core { background: #451F17; }
+    .upcoming .pulse { background: rgba(222,158,103,0.25); box-shadow: 0 0 25px rgba(222,158,103,0.8); }
+    .upcoming .core { background: #DE9E67; }
 
-      @keyframes pulseEffect { 0% { transform: translate(-50%,-50%) scale(0.7); opacity: 0.9; } 70% { transform: translate(-50%,-50%) scale(2.5); opacity: 0; } 100% { transform: translate(-50%,-50%) scale(3); opacity: 0; } }
+    @keyframes pulseEffect { 0% { transform: translate(-50%,-50%) scale(0.7); opacity: 0.9; } 70% { transform: translate(-50%,-50%) scale(2.5); opacity: 0; } 100% { transform: translate(-50%,-50%) scale(3); opacity: 0; } }
 
-      .label { position: absolute; top: 32px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 13px; font-weight: 700; font-family: 'IBMPlexMono', monospace; text-shadow: 0 2px 6px rgba(0,0,0,0.7); pointer-events: none; }
+    .label { position: absolute; top: 32px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 13px; font-weight: 700; font-family: 'IBMPlexMono', monospace; text-shadow: 0 2px 6px rgba(0,0,0,0.7); pointer-events: none; }
 
-      .legend-tags { display: flex; flex-direction: column; gap: 10px; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); z-index: 100; font-family: 'IBMPlexMono', monospace; font-weight: 700; }
-      .tag { padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 700; font-family: 'IBMPlexMono', monospace; cursor: pointer; transition: background-color 0.2s ease; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
-      .tag-past { background: #451F17; }
-      .tag-upcoming { background: #DE9E67; }
-      .tag-upcoming:hover { background-color: #e3af7b; }
+    .legend-tags { display: flex; flex-direction: column; gap: 10px; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); z-index: 100; font-family: 'IBMPlexMono', monospace; font-weight: 700; }
+    .tag { padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 700; font-family: 'IBMPlexMono', monospace; cursor: pointer; transition: background-color 0.2s ease; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+    .tag-past { background: #451F17; }
+    .tag-upcoming { background: #DE9E67; }
+    .tag-upcoming:hover { background-color: #e3af7b; }
 
-      .view-toggle { display: flex; gap: 8px; position: absolute; top: 16px; right: 16px; z-index: 200; }
-      .toggle-btn { display: flex; align-items: center; justify-content: center; background: #fff; color: #b67237; border-radius: 999px; padding: 10px 16px; font-size: 16px; font-weight: 700; font-family: 'IBMPlexMono', monospace; cursor: pointer; border: none; outline: none; transition: background-color .2s; height: 40px; }
-      .toggle-btn:hover { background: #f2f2f2; }
+    .view-toggle { display: flex; gap: 8px; position: absolute; top: 16px; right: 16px; z-index: 200; }
+    .toggle-btn { display: flex; align-items: center; justify-content: center; background: #fff; color: #b67237; border-radius: 999px; padding: 10px 16px; font-size: 16px; font-weight: 700; font-family: 'IBMPlexMono', monospace; cursor: pointer; border: none; outline: none; transition: background-color .2s; height: 40px; }
+    .toggle-btn:hover { background: #f2f2f2; }
 
-      @media(max-width: 768px) {
-        .legend-tags { flex-direction: row; bottom: 16px; top: auto; left: 50%; transform: translateX(-50%); }
-        .tag { font-size: 12px; padding: 6px 12px; border-radius: 12px; }
-      }
+    /* Event overlay styling */
+    .event-overlay { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 90%; max-width: 600px; background: rgba(255, 245, 235, 0.2); color: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); z-index: 300; font-family: 'IBMPlexMono', monospace; }
+    .event-overlay img { width: 100%; border-radius: 8px; margin-bottom: 12px; }
+    .event-overlay h2 { font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+    .event-overlay .buttons { display: flex; flex-direction: column; gap: 10px; }
+    .event-overlay button { font-family: 'IBMPlexMono', monospace; font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 8px; cursor: pointer; border: none; }
+    .event-overlay .primary { background: #451F17; color: #fff; }
+    .event-overlay .secondary { background: #DE9E67; color: #fff; }
+    .event-overlay .close { position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #fff; font-size: 24px; cursor: pointer; }
 
-      .event-overlay { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 90%; max-width: 600px; background: rgba(255, 245, 235, 0.2); color: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); z-index: 300; font-family: 'IBMPlexMono', monospace; }
-      .event-overlay img { width: 100%; border-radius: 8px; margin-bottom: 12px; }
-      .event-overlay h2 { font-weight: 700; font-size: 20px; margin-bottom: 12px; }
-      .event-overlay .buttons { display: flex; flex-direction: column; gap: 10px; }
-      .event-overlay button { font-family: 'IBMPlexMono', monospace; font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 8px; cursor: pointer; border: none; }
-      .event-overlay .primary { background: #451F17; color: #fff; }
-      .event-overlay .secondary { background: #DE9E67; color: #fff; }
-      .event-overlay .close { position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #fff; font-size: 24px; cursor: pointer; }
-    `;
-    document.head.appendChild(style);
-  }, []);
+    @media(max-width: 1024px) {
+  .event-overlay { bottom: 10%; } /* moves it slightly up from bottom */
+  .event-overlay { margin-bottom: 40px; }
+  .legend-tags { gap: 12px; bottom: 65px; }
+}
+
+@media(max-width: 768px) {
+  .event-overlay { bottom: 5%; } /* further down-middle on smaller devices */
+  .event-overlay  { margin-bottom: 60px; }
+  .legend-tags { gap: 12px; bottom: 65px; }
+}
+
+@media(max-width: 480px) {
+  .event-overlay { bottom: 2%; } /* down-middle on small phones */
+  .event-overlay  { margin-bottom: 80px; }
+  .legend-tags { gap: 12px; bottom: 65px; }
+}
+
+  `;
+  document.head.appendChild(style);
+}, []);
+
+
 
   const htmlElementsData = useMemo(() => EVENTS.map((e) => ({ ...e })), []);
 
