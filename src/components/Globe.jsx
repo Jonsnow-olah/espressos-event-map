@@ -18,7 +18,7 @@ const EVENTS = [
   { id: "brussels", name: "Brussels", lat: 50.8503, lng: 4.3517, type: "past", image: "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/fz/7a4f0d00-8988-40ce-9d08-897383981a33", link: "https://luma.com/ud8p6oww" },
   { id: "berlin", name: "Berlin", lat: 52.52, lng: 13.405, type: "past", image: "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/lg/66aa8a08-1c4d-4a2a-8ae4-1fac476afc42.png", link: "https://luma.com/u407uyxp" },
   { id: "seoul", name: "Seoul", lat: 37.5665, lng: 126.9780, type: "upcoming", image: "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/eb/d17054bd-4286-44c4-bd7a-e0d6c0826818.png", link: "https://luma.com/h9uxi7c1" },
-  { id: "buenos", name: "Buenos Aires", lat: -34.6118, lng: -58.3960, type: "upcoming", image: "https://luma.com/user/usr-cAqsoa41hhkQxPs", link: "https://luma.com/buenosaires" },
+  { id: "buenos", name: "Buenos Aires", lat: -34.6118, lng: -58.3960, type: "upcoming", image: "https://luma.com/user/usr-cAqsoa41hhkQxPs", link: "#" },
 ];
 
 export default function EspressoWorldMap() {
